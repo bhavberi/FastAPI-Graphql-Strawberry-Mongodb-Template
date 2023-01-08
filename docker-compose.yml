@@ -21,5 +21,7 @@ services:
             - ./.env
         ports:
             - 80:80
+        volumes:
+            - ./template:/code/app
         depends_on:
             - mongo

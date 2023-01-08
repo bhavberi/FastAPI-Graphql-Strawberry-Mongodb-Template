@@ -96,7 +96,7 @@ class Sample(BaseModel):
 
     # Would query only when field is accessed via the model
     @validator("attribute1")
-    def check_current_poc(cls, value):
+    def check_attribute1(cls, value):
         if "a" in value:
             return value*2
         return value
