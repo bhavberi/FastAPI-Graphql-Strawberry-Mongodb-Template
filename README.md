@@ -3,7 +3,7 @@
 
 Template repository for a Service using ***FastAPI + Strawberry-Graphql + MongoDB***.
 
-_Contains example code for queries, mutations, types and models._  
+_Contains example code  for various variations of queries, mutations, types and models, for further reference and easy coding..._  
 Check out `Sample` entities, for reference.
 
 ----
