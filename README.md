@@ -32,5 +32,5 @@ This code was referred from the template code (Private Repository in [Clubs-Coun
 
 ----
 ![GitHub Code size in bytes](https://img.shields.io/github/languages/code-size/bhavberi/FastAPI-Graphql-Strawberry-Mongodb-Template?color=yellow&label=Code%20Size&style=plastic)
-![GitHub Repo size](https://img.shields.io/github/repo-size/bhavberi/FastAPI-Graphql-Strawberry-Mongodb-Template?color=orange&label=Repository%20Size)
+<!-- ![GitHub Repo size](https://img.shields.io/github/repo-size/bhavberi/FastAPI-Graphql-Strawberry-Mongodb-Template?color=orange&label=Repository%20Size) -->
 
