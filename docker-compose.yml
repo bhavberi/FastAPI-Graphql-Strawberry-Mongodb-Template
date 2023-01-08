@@ -1,0 +1,25 @@
+version: '3.8'
+
+volumes:
+    mongo_data:
+
+
+services:
+    mongo:
+        image: mongo:6.0.2
+        volumes:
+            - mongo_data:/data/db
+        ports:
+            - 27017:27017
+        env_file:
+            - ./.env
+        restart: unless-stopped
+
+    template:
+        build: ./template
+        env_file:
+            - ./.env
+        ports:
+            - 80:80
+        depends_on:
+            - mongo
