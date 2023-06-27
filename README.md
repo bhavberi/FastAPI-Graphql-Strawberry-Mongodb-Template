@@ -24,6 +24,24 @@ localhost:80
 ```
 6. To stop, press `Ctrl + C`
 
+## Example Requests
+
+```bash
+# Create document
+curl -X 'POST' \
+  'http://localhost:8000/graphql' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{"query": "mutation{sampleMutationOne(sampleInput: {attribute2: \"hi\", email: \"me@gmail.com\", name: \"test\"}) {name}}"}'
+
+# Get documents
+curl -X 'POST' \
+  'http://localhost:8000/graphql' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{"query": "query{sampleQueryTwo{attribute1, name}}"}'
+```
+
 ----
 This code was referred from the template code (Private Repository in [Clubs-Council-IIITH Organisation](https://github.com/Clubs-Council-IIITH)) by 
 [@bhavberi]https://(github.com/bhavberi), 
