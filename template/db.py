@@ -7,7 +7,7 @@ from pymongo import MongoClient
 MONGO_URI = "mongodb://{}:{}@mongo:{}/".format(
     getenv("MONGO_USERNAME", default="username"),
     getenv("MONGO_PASSWORD", default="password"),
-    getenv("MONGO_PORT", default="27107")
+    getenv("MONGO_PORT", default="27107"),
 )
 MONGO_DATABASE = getenv("MONGO_DATABASE", default="samples")
 

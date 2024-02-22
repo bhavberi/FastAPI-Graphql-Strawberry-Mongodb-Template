@@ -44,7 +44,7 @@ curl -X 'POST' \
 
 ----
 This code was referred from the template code (Private Repository in [Clubs-Council-IIITH Organisation](https://github.com/Clubs-Council-IIITH)) by 
-[@bhavberi]https://(github.com/bhavberi), 
+[@bhavberi](https://github.com/bhavberi), 
 [@ek234](https://github.com/ek234) and 
 [@v15hv4](https://github.com/v15hv4).
 

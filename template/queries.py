@@ -10,6 +10,7 @@ from .models import Sample
 from .otypes import Info
 from .otypes import SimpleSampleType, FullSampleType, SampleQueryInput
 
+
 # sample query
 @strawberry.field
 def sampleQueryOne(sampleInput: SampleQueryInput, info: Info) -> FullSampleType:
@@ -54,7 +55,4 @@ def sampleQueryTwo(info: Info) -> List[SimpleSampleType]:
 
 
 # register all queries
-queries = [
-    sampleQueryOne,
-    sampleQueryTwo
-]
+queries = [sampleQueryOne, sampleQueryTwo]

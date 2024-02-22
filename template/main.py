@@ -21,6 +21,7 @@ Query = create_type("Query", queries)
 # create mutation types
 Mutation = create_type("Mutation", mutations)
 
+
 # override context getter
 async def get_context() -> Context:
     return Context()
@@ -43,6 +44,6 @@ app = FastAPI(
     debug=DEBUG,
     title="BB Template",
     desciption="Integration of FastAPI, Strawberry and Pydantic with Mondodb using pymongo",
-    port = 5000
-    )
+    port=5000,
+)
 app.include_router(gql_app, prefix="/graphql")

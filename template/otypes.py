@@ -30,10 +30,12 @@ PyObjectIdType = strawberry.scalar(
     PyObjectId, serialize=str, parse_value=lambda v: PyObjectId(v)
 )
 
+
 # Object Type for the Sub-Model
 @strawberry.experimental.pydantic.type(model=Links, all_fields=True)
 class LinksType:
     pass
+
 
 # sample object type from pydantic model with all fields exposed
 @strawberry.experimental.pydantic.type(model=Sample, all_fields=True)
@@ -41,25 +43,18 @@ class FullSampleType:
     pass
 
 
-@strawberry.experimental.pydantic.type(model=Sample, fields=[
-    "attribute1",
-    "attribute2",
-    "usingenum",
-    "name",
-    "email",
-    "links"
-])
+@strawberry.experimental.pydantic.type(
+    model=Sample,
+    fields=["attribute1", "attribute2", "usingenum", "name", "email", "links"],
+)
 class SimpleSampleType:
     pass
 
+
 # sample query's input type from pydantic model
-@strawberry.experimental.pydantic.input(model=Sample, fields=[
-    "id",
-    "attribute2",
-    "usingenum",
-    "name",
-    "email"
-])
+@strawberry.experimental.pydantic.input(
+    model=Sample, fields=["id", "attribute2", "usingenum", "name", "email"]
+)
 class SampleQueryInput:
     attribute1: strawberry.auto
 
