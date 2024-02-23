@@ -29,14 +29,14 @@ localhost:80
 ```bash
 # Create document
 curl -X 'POST' \
-  'http://localhost:8000/graphql' \
+  'http://localhost:80/graphql' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{"query": "mutation{sampleMutationOne(sampleInput: {attribute2: \"hi\", email: \"me@gmail.com\", name: \"test\"}) {name}}"}'
 
 # Get documents
 curl -X 'POST' \
-  'http://localhost:8000/graphql' \
+  'http://localhost:80/graphql' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{"query": "query{sampleQueryTwo{attribute1, name}}"}'
