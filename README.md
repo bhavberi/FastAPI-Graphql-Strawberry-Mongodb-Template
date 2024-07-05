@@ -6,6 +6,8 @@ Template repository for a Service using ***FastAPI + Strawberry-Graphql + MongoD
 _Contains example code  for various variations of queries, mutations, types and models, for further reference and easy coding..._  
 Check out `Sample` entities, for reference.
 
+You can add multiple services by duplicating the template folder and its corresponding entry in the `docker-compose.yml` file. Create new services based on these copies.
+
 ----
 ## How to use 📝
 1. Click the green `Use this template` button on the top right to create a new repository in the personal account for the service.
