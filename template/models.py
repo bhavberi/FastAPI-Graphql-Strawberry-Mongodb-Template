@@ -9,7 +9,6 @@ from pydantic import (
     Field,
     EmailStr,
     AnyHttpUrl,
-    validator,
     ValidationInfo,
 )
 from pydantic_core import core_schema
@@ -74,7 +73,7 @@ class Sample(BaseModel):
 
     # Optional and auto generated if not specified
     attribute1: str | None = Field(
-        default_factory=lambda: "Default", description="Atrribute 1"
+        "Default", description="Atrribute 1"
     )
     attribute2: str = Field(..., description="Attribute 2")  # Required always
 
@@ -99,8 +98,6 @@ class Sample(BaseModel):
     )
 
     # Validators
-    # Allow reuse for using the same function at other places too
-    _check_email = validator("email", allow_reuse=True)(gmail_only)
 
     @field_validator("name", mode="before")
     # Value - the field for which validator, values - all other field values
@@ -113,9 +110,13 @@ class Sample(BaseModel):
     @field_validator("attribute1")
     @classmethod
     def check_attribute1(cls, value):
-        if "a" in value:
+        if "z" in value:
             return value * 2
         return value
+    
+    @field_validator("email", mode="before")
+    def _check_email(cls, v):
+        return gmail_only(v)
 
     # TODO[pydantic]: The following keys were removed: `json_encoders`.
     # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
