@@ -26,7 +26,7 @@ def sampleQueryOne(sampleInput: SampleQueryInput, info: Info) -> FullSampleType:
 
     # handle missing sample
     if found_sample:
-        found_sample = Sample.parse_obj(found_sample)
+        found_sample = Sample.model_validate(found_sample)
         return FullSampleType.from_pydantic(found_sample)  # type: ignore
     else:
         raise Exception("Sample not found!")
@@ -48,7 +48,9 @@ def sampleQueryTwo(info: Info) -> List[SimpleSampleType]:
     if results:
         samples = []
         for result in results:
-            samples.append(SimpleSampleType.from_pydantic(Sample.parse_obj(result)))  # type: ignore
+            samples.append(
+                SimpleSampleType.from_pydantic(Sample.model_validate(result))
+            )
         return samples
     else:
         raise Exception("No Club Result Found")

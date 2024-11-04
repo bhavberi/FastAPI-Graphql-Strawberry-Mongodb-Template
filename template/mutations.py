@@ -21,7 +21,7 @@ def sampleMutationOne(sampleInput: SampleMutationInput) -> SimpleSampleType:
     created_id = db.samples.insert_one(sample).inserted_id
 
     # query back from database
-    created_sample = Sample.parse_obj(db.samples.find_one({"_id": created_id}))
+    created_sample = Sample.model_validate(db.samples.find_one({"_id": created_id}))
 
     # Returning back json, strawberry based model response
     return SimpleSampleType.from_pydantic(created_sample)  # type: ignore
@@ -42,7 +42,7 @@ def sampleMutationTwo(sampleInput: SampleMutationInput, info: Info) -> FullSampl
     )
 
     # query back from database
-    created_sample = Sample.parse_obj(db.samples.find_one({"_id": input["_id"]}))
+    created_sample = Sample.model_validate(db.samples.find_one({"_id": input["_id"]}))
 
     return FullSampleType.from_pydantic(created_sample)  # type: ignore
 
