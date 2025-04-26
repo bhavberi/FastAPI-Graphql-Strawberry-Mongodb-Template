@@ -47,3 +47,8 @@ app = FastAPI(
     port=5000,
 )
 app.include_router(gql_app, prefix="/graphql")
+
+# Add backend running confirmation
+@app.get("/")
+async def ping():
+    return {"ping": "pong"}
