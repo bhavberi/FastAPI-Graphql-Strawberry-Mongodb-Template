@@ -3,7 +3,7 @@ volumes:
 
 services:
     mongo:
-        image: mongo:4.4.18
+        image: mongo:8.2
         volumes:
             - mongo_data:/data/db
         env_file:
@@ -12,14 +12,14 @@ services:
             - 27017:27017
         restart: unless-stopped
 
-    mongo-express:
-        image: mongo-express:latest
-        ports:
-            - 8081:8081
-        depends_on:
-            - mongo
-        env_file:
-            - ./.env
+    # mongo-express:
+    #     image: mongo-express:latest
+    #     ports:
+    #         - 8081:8081
+    #     depends_on:
+    #         - mongo
+    #     env_file:
+    #         - ./.env
 
     template:
         build: ./template
