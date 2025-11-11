@@ -25,7 +25,7 @@ from pymongo import AsyncMongoClient
 MONGO_URI = "mongodb://{}:{}@mongo:{}/".format(
     getenv("MONGO_USERNAME", default="username"),
     getenv("MONGO_PASSWORD", default="password"),
-    getenv("MONGO_PORT", default="27107"),
+    getenv("MONGO_PORT", default="27017"),
 )
 MONGO_DATABASE = getenv("MONGO_DATABASE", default="samples")
 
