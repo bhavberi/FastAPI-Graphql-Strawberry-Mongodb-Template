@@ -5,7 +5,7 @@ from strawberry.fastapi import BaseContext
 from strawberry.types import Info as _Info
 from strawberry.types.info import RootValueType
 
-from typing import Union, Dict, Optional
+from typing import Union, Dict
 from functools import cached_property
 
 from .models import PyObjectId, Sample, Links

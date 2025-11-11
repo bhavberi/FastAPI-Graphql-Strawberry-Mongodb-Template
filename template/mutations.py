@@ -1,7 +1,6 @@
 import strawberry
 
 from fastapi.encoders import jsonable_encoder
-from typing import List
 from datetime import datetime
 
 from .db import db
