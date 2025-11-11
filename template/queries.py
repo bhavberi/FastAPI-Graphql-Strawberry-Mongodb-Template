@@ -14,6 +14,16 @@ from .otypes import SimpleSampleType, FullSampleType, SampleQueryInput
 # sample query
 @strawberry.field
 async def sampleQueryOne(sampleInput: SampleQueryInput, info: Info) -> FullSampleType:
+    """
+    Sample Query One
+
+    Args:
+        sampleInput (otypes.SampleQueryInput): Input containing sample id.
+        info (otypes.Info): User metadata and cookies.
+
+    Returns:
+        (otypes.FullSampleType): Full sample details.
+    """
     # Getting user context - for selective permissions
     user = info.context.user
     print("user:", user)
@@ -35,6 +45,15 @@ async def sampleQueryOne(sampleInput: SampleQueryInput, info: Info) -> FullSampl
 # Query Returning List of values
 @strawberry.field
 async def sampleQueryTwo(info: Info) -> List[SimpleSampleType]:
+    """
+    Sample Query Two
+
+    Args:
+        info (otypes.Info): User metadata and cookies.
+
+    Returns:
+        (List[otypes.SimpleSampleType]): List of simple sample details.
+    """
     # Getting user context - for selective permissions
     user = info.context.user
     print("user:", user)

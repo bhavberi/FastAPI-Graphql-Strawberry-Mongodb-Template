@@ -1,3 +1,13 @@
+"""
+Main application file to serve FastAPI with Strawberry GraphQL integration.
+It sets up the GraphQL schema, context, and integrates with MongoDB.
+
+Attributes:
+    DEBUG (bool): Indicates whether the application is running in debug mode.
+    gql_app (GraphQLRouter): The GraphQL router for handling GraphQL requests.
+    app (FastAPI): The FastAPI application instance.
+"""
+
 from contextlib import asynccontextmanager
 from os import getenv
 

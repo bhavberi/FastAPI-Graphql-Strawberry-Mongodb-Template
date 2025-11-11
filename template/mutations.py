@@ -12,6 +12,15 @@ from .otypes import SimpleSampleType, FullSampleType, SampleMutationInput
 # sample mutation
 @strawberry.mutation
 async def sampleMutationOne(sampleInput: SampleMutationInput) -> SimpleSampleType:
+    """
+    Sample Mutation One
+    
+    Args:
+        sampleInput (otypes.SampleMutationInput): Input containing sample details.
+        
+    Returns:
+        (otypes.SimpleSampleType): Simple sample details.
+    """
     # Converting the input to pydantic model - json based
     sample = jsonable_encoder(sampleInput.to_pydantic())
 
@@ -31,6 +40,16 @@ async def sampleMutationOne(sampleInput: SampleMutationInput) -> SimpleSampleTyp
 async def sampleMutationTwo(
     sampleInput: SampleMutationInput, info: Info
 ) -> FullSampleType:
+    """
+    Sample Mutation Two
+
+    Args:
+        sampleInput (otypes.SampleMutationInput): Input containing sample details.
+        info (otypes.Info): User metadata and cookies.
+
+    Returns:
+        (otypes.FullSampleType): Full sample details.
+    """
     # Getting user context - for selective permissions
     user = info.context.user
     print(user)

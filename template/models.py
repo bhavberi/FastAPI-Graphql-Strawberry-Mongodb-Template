@@ -18,6 +18,10 @@ from pytz import timezone
 
 # for handling mongo ObjectIds
 class PyObjectId(ObjectId):
+    """
+    Class for handling MongoDB document ObjectIds for 'id' fields in Models.
+    """
+
     @classmethod
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
         return core_schema.union_schema(
@@ -42,6 +46,18 @@ class PyObjectId(ObjectId):
 
 # Custom Function based Validator
 def gmail_only(v: str) -> str:
+    """
+    Validator to allow only Gmail emails.
+
+    Args:
+        v (str): Email string to be validated.
+
+    Raises:
+        ValueError: If email is not a valid Gmail email.
+
+    Returns:
+        (str): Valid Gmail email.
+    """
     valid_domains = ["@gmail.com", "@google.com", "@google.in"]
     if any(valid_domain in v for valid_domain in valid_domains):
         return v.lower()
@@ -51,6 +67,7 @@ def gmail_only(v: str) -> str:
 
 # Function for generating default values in model in Default Factory
 def current_year() -> int:
+    """Returns the current year."""
     return datetime.now().year
 
 # Function for generating UTC time
@@ -64,6 +81,7 @@ def create_utc_time():
 # Enum Type for Model - fixed range of values
 @strawberry.enum
 class EnumTrial(str, Enum):
+    """Enum for trialing enum field in Model."""
     online = "online"
     offline = "offline"
     hybrid = "hybrid"
@@ -71,12 +89,34 @@ class EnumTrial(str, Enum):
 
 # Sub-Class for Pydantic Model
 class Links(BaseModel):
+    """
+    Sub-model for holding links.
+    
+    Attributes:
+        linkone (AnyHttpUrl | None): First link (Required).
+        linktwo (AnyHttpUrl | None): Second link (Optional)."""
     linkone: AnyHttpUrl | None = Field(...)
     linktwo: AnyHttpUrl | None = Field(None)
 
 
 # Sample Pydantic Model
 class Sample(BaseModel):
+    """
+    Sample Pydantic Model for demonstration.
+
+    Attributes:
+        id (PyObjectId): MongoDB ObjectId for the model.
+        attribute1 (str | None): Optional attribute with default value.
+        attribute2 (str): Required attribute.
+        boolean (bool): Required boolean with default factory.
+        usingenum (EnumTrial): Enum field with default value.
+        listnum (List[int] | None): Optional list of integers.
+        links (Links | None): Optional sub-model for links.
+        date_time (datetime): Required datetime with default factory.
+        name (str): Required name with length constraints.
+        email (EmailStr): Required email field.
+        contact (str | None): Optional contact field with regex validation.
+    """
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")  # Model id
 
     # Optional and auto generated if not specified
