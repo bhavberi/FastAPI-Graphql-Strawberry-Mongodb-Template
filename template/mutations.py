@@ -1,49 +1,54 @@
 import strawberry
 
 from fastapi.encoders import jsonable_encoder
-from datetime import datetime
 
 from .db import db
 
-from .models import Sample
+from .models import Sample, create_utc_time
 from .otypes import Info
 from .otypes import SimpleSampleType, FullSampleType, SampleMutationInput
 
 
 # sample mutation
 @strawberry.mutation
-def sampleMutationOne(sampleInput: SampleMutationInput) -> SimpleSampleType:
-    sample = jsonable_encoder(sampleInput.to_pydantic())  # type: ignore
+async def sampleMutationOne(sampleInput: SampleMutationInput) -> SimpleSampleType:
     # Converting the input to pydantic model - json based
+    sample = jsonable_encoder(sampleInput.to_pydantic())
 
     # add to database
-    created_id = db.samples.insert_one(sample).inserted_id
+    created_record = await db.samples.insert_one(sample)
 
     # query back from database
-    created_sample = Sample.model_validate(db.samples.find_one({"_id": created_id}))
+    created_sample = Sample.model_validate(
+        await db.samples.find_one({"_id": created_record.inserted_id})
+    )
 
     # Returning back json, strawberry based model response
-    return SimpleSampleType.from_pydantic(created_sample)  # type: ignore
+    return SimpleSampleType.from_pydantic(created_sample)
 
 
 @strawberry.mutation
-def sampleMutationTwo(sampleInput: SampleMutationInput, info: Info) -> FullSampleType:
+async def sampleMutationTwo(
+    sampleInput: SampleMutationInput, info: Info
+) -> FullSampleType:
+    # Getting user context - for selective permissions
     user = info.context.user
     print(user)
-    # Getting user context - for selective permissions
 
-    input = jsonable_encoder(sampleInput.to_pydantic())  # type: ignore
+    input = jsonable_encoder(sampleInput.to_pydantic())
 
     # update to database
-    db.samples.update_one(
+    await db.samples.update_one(
         {"cid": input["_id"]},
-        {"$set": {"name": "UPDATED", "attribute2": str(datetime.utcnow)}},
+        {"$set": {"name": "UPDATED", "attribute2": create_utc_time()}},
     )
 
     # query back from database
-    created_sample = Sample.model_validate(db.samples.find_one({"_id": input["_id"]}))
+    created_sample = Sample.model_validate(
+        await db.samples.find_one({"_id": input["_id"]})
+    )
 
-    return FullSampleType.from_pydantic(created_sample)  # type: ignore
+    return FullSampleType.from_pydantic(created_sample)
 
 
 # register all mutations

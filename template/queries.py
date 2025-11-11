@@ -13,37 +13,37 @@ from .otypes import SimpleSampleType, FullSampleType, SampleQueryInput
 
 # sample query
 @strawberry.field
-def sampleQueryOne(sampleInput: SampleQueryInput, info: Info) -> FullSampleType:
+async def sampleQueryOne(sampleInput: SampleQueryInput, info: Info) -> FullSampleType:
+    # Getting user context - for selective permissions
     user = info.context.user
     print("user:", user)
-    # Getting user context - for selective permissions
 
-    sample = jsonable_encoder(sampleInput.to_pydantic())  # type: ignore
     # Converting the input to pydantic model - json based
+    sample = jsonable_encoder(sampleInput.to_pydantic())
 
     # query from database
-    found_sample = db.samples.find_one({"_id": sample["_id"]})
+    found_sample = await db.samples.find_one({"_id": sample["_id"]})
 
     # handle missing sample
     if found_sample:
         found_sample = Sample.model_validate(found_sample)
-        return FullSampleType.from_pydantic(found_sample)  # type: ignore
+        return FullSampleType.from_pydantic(found_sample)
     else:
         raise Exception("Sample not found!")
 
 
 # Query Returning List of values
 @strawberry.field
-def sampleQueryTwo(info: Info) -> List[SimpleSampleType]:
+async def sampleQueryTwo(info: Info) -> List[SimpleSampleType]:
+    # Getting user context - for selective permissions
     user = info.context.user
     print("user:", user)
-    # Getting user context - for selective permissions
 
-    results = db.samples.find()
     """
     NOTE:-
     Mongo needs the collection name to end at s specifically
     """
+    results = await db.samples.find().to_list(length=None)
 
     if results:
         samples = []

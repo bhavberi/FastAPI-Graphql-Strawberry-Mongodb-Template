@@ -13,6 +13,7 @@ from pydantic import (
 )
 from pydantic_core import core_schema
 from typing import Any, List
+from pytz import timezone
 
 
 # for handling mongo ObjectIds
@@ -51,6 +52,13 @@ def gmail_only(v: str) -> str:
 # Function for generating default values in model in Default Factory
 def current_year() -> int:
     return datetime.now().year
+
+# Function for generating UTC time
+def create_utc_time():
+    """
+    Returns the current time according to UTC timezone.
+    """
+    return datetime.now(timezone("UTC"))
 
 
 # Enum Type for Model - fixed range of values
@@ -118,8 +126,6 @@ class Sample(BaseModel):
     def _check_email(cls, v):
         return gmail_only(v)
 
-    # TODO[pydantic]: The following keys were removed: `json_encoders`.
-    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
     model_config = ConfigDict(
         populate_by_name=True,
         arbitrary_types_allowed=True,
@@ -127,5 +133,7 @@ class Sample(BaseModel):
         str_strip_whitespace=True,
         str_max_length=200,
         validate_assignment=True,
+        validate_default=True,
+        validate_return=True,
         extra="forbid",
     )

@@ -1,10 +1,13 @@
-import strawberry
-from strawberry.tools import create_type
-from strawberry.fastapi import GraphQLRouter
-
-from fastapi import FastAPI
-
+from contextlib import asynccontextmanager
 from os import getenv
+
+import strawberry
+from fastapi import FastAPI
+from strawberry.fastapi import GraphQLRouter
+from strawberry.tools import create_type
+
+# database imports
+from .db import ensure_samples_index
 
 # override PyObjectId and Context scalars
 from .models import PyObjectId
@@ -38,8 +41,17 @@ schema = strawberry.federation.Schema(
 # Get env variable of whether to run application in Debug Mode
 DEBUG = getenv("TEMPLATE_DEBUG", "false").lower() in ("true", "1", "t")
 
+# Make GraphQL Router
+gql_app = GraphQLRouter(schema, graphiql=True, context_getter=get_context)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    await ensure_samples_index()
+    yield
+    # Shutdown
+
 # serve API with FastAPI router
-gql_app = GraphQLRouter(schema, context_getter=get_context)
 app = FastAPI(
     debug=DEBUG,
     title="BB Template",

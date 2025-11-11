@@ -1,4 +1,5 @@
 email_validator >=2.2.0
 fastapi==0.116.1
 pymongo==4.14.1
+pytz==2025.2
 strawberry-graphql[debug-server]==0.280.0
